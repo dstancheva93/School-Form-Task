@@ -1,0 +1,70 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6 col-sm-8">
+      <h3 class="text-center mb-5">School Form</h3>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="country">Country:</label>
+          <select
+            id="country"
+            class="form-control"
+            formControlName="country"
+            (change)="fetchCities()"
+            [(ngModel)]="selectedCountry"
+          >
+            <option value="undefined" disabled selected>Select country</option>
+            <option *ngFor="let country of countries" [ngValue]="country">
+              {{ country.name }}
+            </option>
+          </select>
+          <div
+            *ngIf="form.get('country').invalid && form.get('country').touched"
+            class="text-danger"
+          >
+            Please select a country
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="form.get('country').valid">
+          <label for="city">City:</label>
+          <select
+            id="city"
+            class="form-control"
+            formControlName="city"
+            (change)="fetchSchoolsForCity()"
+            [(ngModel)]="selectedCity"
+          >
+            <option value="undefined" disabled selected>Select city</option>
+            <option *ngFor="let city of cities" [ngValue]="city">
+              {{ city.name }}
+            </option>
+          </select>
+          <div
+            *ngIf="form.get('city').invalid && form.get('city').touched"
+            class="text-danger"
+          >
+            Please select a city
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="form.get('city').valid">
+          <label for="school">School:</label>
+          <select id="school" class="form-control" formControlName="school">
+            <option value="" disabled selected>Select school</option>
+            <option *ngFor="let school of schools" [ngValue]="school">
+              {{ school.name }}
+            </option>
+          </select>
+          <div
+            *ngIf="form.get('school').invalid && form.get('school').touched"
+            class="text-danger"
+          >
+            Please select a school
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
